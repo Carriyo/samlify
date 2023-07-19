@@ -7,6 +7,10 @@
 
 Highly configuarable Node.js SAML 2.0 library for Single Sign On
 
+Carriyo fork of samlify with following changes:
+- RelayState at login request level (feature)
+- Encode character entities in XML attributes (bug)
+
 ## Welcome PRs
 
 Welcome all PRs for maintaining this project, or provide a link to the repositories especially for use cases alongside with different frameworks.
