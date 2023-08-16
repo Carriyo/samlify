@@ -53,7 +53,7 @@ export class ServiceProvider extends Entity {
   * @param  {IdentityProvider} idp               object of identity provider
   * @param  {string}   binding                   protocol binding
   * @param  {function} [customTagReplacement]    used when developers have their own login response template
-  * @param  {string}   [relayState]              relay state override for binding = "redirect" flow. pass empty string to remove sp's relay state.
+  * @param  {string}   [relayState]              relay state override. pass empty string to remove sp's relay state.
   */
   public createLoginRequest(
     idp: IdentityProvider,
