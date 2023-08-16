@@ -43,6 +43,7 @@
     "xpath": "^0.0.32"
   },
   "devDependencies": {
+    "@authenio/samlify-node-xmllint": "^2.0.0",
     "@ava/typescript": "^1.1.1",
     "@types/node": "^11.11.3",
     "@types/node-forge": "^1.0.1",
