@@ -7,9 +7,9 @@ import * as url from 'url';
 import util from '../src/utility';
 import * as tk from 'timekeeper';
 
-import * as validator from '@authenio/samlify-xsd-schema-validator';
+// import * as validator from '@authenio/samlify-xsd-schema-validator';
 // import * as validator from '@authenio/samlify-validate-with-xmllint';
-// import * as validator from '@authenio/samlify-node-xmllint';
+import * as validator from '@authenio/samlify-node-xmllint';
 // import * as validator from '@authenio/samlify-libxml-xsd';
 
 // const validator = require('@authenio/samlify-xsd-schema-validator');
@@ -165,13 +165,22 @@ function writer(str) {
 }
 
 test('create login request with redirect binding using default template and parse it', async t => {
-  const { id, context } = sp.createLoginRequest(idp, 'redirect');
+  const state = 'http://example.com/page';
+  const { id, context } = sp.createLoginRequest(
+    idp,
+    'redirect',
+    undefined, 
+    encodeURIComponent(state),
+  );
   t.is(typeof id, 'string');
   t.is(typeof context, 'string');
   const originalURL = url.parse(context, true);
   const SAMLRequest = originalURL.query.SAMLRequest;
   const Signature = originalURL.query.Signature;
   const SigAlg = originalURL.query.SigAlg;
+  const RelayState = originalURL.query.RelayState;
+  t.is(typeof RelayState, 'string');
+  t.is(decodeURIComponent(RelayState as string), state);
   delete originalURL.query.Signature;
   const octetString = Object.keys(originalURL.query).map(q => q + '=' + encodeURIComponent(originalURL.query[q] as string)).join('&');
   const { samlContent, extract } = await idp.parseLoginRequest(sp, 'redirect', { query: { SAMLRequest, Signature, SigAlg }, octetString});
